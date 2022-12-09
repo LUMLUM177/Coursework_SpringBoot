@@ -9,6 +9,7 @@ import java.util.*;
 public class JavaQuestionService implements QuestionService {
 
     private final Set<Question> questions = new HashSet<>();
+    private final Map<Integer, Question> randomQuestions = new HashMap<>();
 
     @Override
     public Question add(String question, String answer) {
@@ -34,17 +35,22 @@ public class JavaQuestionService implements QuestionService {
         return questions;
     }
 
+    private void putRandomQuestionsMap() {
+        Integer id = 0;
+        for (Question question : questions) {
+            randomQuestions.put(id, question);
+            id++;
+        }
+    }
+
     @Override
     public Question getRandomQuestion() {
+        putRandomQuestionsMap();
         Question randomQuestion = new Question("test", "test");
         Random random = new Random();
-        int number = random.nextInt(questions.size());
-        int i = 0;
-        for (Question question : questions) {
-            if (i == number) {
-                randomQuestion = question;
-            }
-            i++;
+        Integer number = random.nextInt(questions.size());
+        if (randomQuestions.containsKey(number)) {
+            randomQuestion = randomQuestions.get(number);
         }
         return randomQuestion;
     }

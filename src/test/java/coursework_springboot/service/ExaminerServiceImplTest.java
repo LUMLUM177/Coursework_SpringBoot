@@ -7,6 +7,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.*;
 
@@ -41,5 +42,13 @@ class ExaminerServiceImplTest {
         Collection<Question> result = examinerService.getRandomQuestions(amount);
 
         assertArrayEquals(actualQuestion.toArray(), result.toArray());
+    }
+
+    @Test
+    public void shouldThrowExceptionWhenAmountQuestionsMoreSizeCollectionThrowsExceptions() {
+        when(questionService.getRandomQuestion())
+                .thenThrow(ResponseStatusException.class);
+
+        assertThrows(ResponseStatusException.class, () -> questionService.getRandomQuestion());
     }
 }

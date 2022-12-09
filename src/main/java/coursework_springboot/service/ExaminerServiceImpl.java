@@ -7,15 +7,12 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Random;
 import java.util.Set;
 
 @Service
 public class ExaminerServiceImpl implements ExaminerService {
 
-    private Random random;
     private final QuestionService service;
-
     public ExaminerServiceImpl(QuestionService service) {
         this.service = service;
     }
